@@ -18,11 +18,18 @@ const App = () => {
       const currentContext = await monday.get("context")
       const currentBlock =
         currentContext.data.focusedBlocks[0].content.deltaFormat
-
+      const range = currentContext.data.range
+      alert(range)
       const newBlock = []
       currentBlock.forEach(async (currentWord) => {
+        let firstPart = currentWord.insert.substr(0, range.index)
+        let lastPart = currentWord.insert.substr(range.index + range.length)
+        let newString =
+          firstPart +
+          currentContext.data.highlightedText.toUpperCase() +
+          lastPart
         const newWord = {
-          insert: currentWord.insert.toUpperCase(),
+          insert: newString,
           attributes: currentWord.attributes,
         }
         newBlock.push(newWord)
